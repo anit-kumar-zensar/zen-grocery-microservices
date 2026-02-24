@@ -1,35 +1,86 @@
 const express = require("express");
-const router = express.Router();
 const Cart = require("../models/cart");
+const router = express.Router();
 
-// GET /api/cart → Fetch cart items
+// Get cart items
 router.get("/", async (req, res) => {
+  console.log("Received get cart items request", req.query);
   try {
-    const items = await Cart.find();
-    res.json(items);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const cart = await Cart.findOne(); // assuming single cart
+    console.log("Cart found:", cart);
+    res.json({ products: cart ? cart.products : [] });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
-// POST /api/cart → Add item to cart
+// Add to cart
 router.post("/", async (req, res) => {
+  console.log("Received add to cart request:", req.body);
+  const { productId } = req.body;
+
+  if (!productId) {
+    return res.status(400).json({ message: "productId is required" });
+  }
+
   try {
-    const newItem = new Cart(req.body);
-    await newItem.save();
-    res.status(201).json(newItem);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+    let cart = await Cart.findOne();
+    if (!cart) {
+      cart = new Cart({ products: [] });
+    }
+
+    const existingItem = cart?.products?.find(
+      (i) => i?.productId?.toString() === productId?.toString(),
+    );
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      // Use new subdocument explicitly
+      cart.products.push({
+        productId: productId, // string is fine, mongoose casts it
+        quantity: 1,
+      });
+    }
+
+    await cart.save();
+    res.json(cart.products);
+  } catch (err) {
+    console.error("Cart POST error:", err);
+    res.status(500).json({ message: err.message });
   }
 });
 
-// DELETE /api/cart/:id → Remove item
-router.delete("/:id", async (req, res) => {
+// Remove from cart
+router.delete("/:productId", async (req, res) => {
+  const { productId } = req.params;
+
   try {
-    await Cart.findByIdAndDelete(req.params.id);
-    res.json({ message: "Item removed from cart" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const cart = await Cart.findOne();
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+    // Match by productId (string comparison)
+    const existingItem = cart.products.find(
+      (i) => i.productId.toString() === productId,
+    );
+
+    if (existingItem) {
+      if (existingItem.quantity > 1) {
+        existingItem.quantity -= 1; // decrement quantity
+      } else {
+        // remove completely if quantity is 1
+        cart.products = cart.products.filter(
+          (i) => i.productId.toString() !== productId,
+        );
+      }
+
+      await cart.save();
+    }
+
+    console.log("Updated cart after deletion:", cart);
+    return res.json(cart.products);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
   }
 });
 
