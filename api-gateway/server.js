@@ -20,7 +20,7 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later.",
 });
 
-// app.use(limiter);
+app.use(limiter);
 
 app.use((req, res, next) => {
   console.log("Incoming:", req.method, req.originalUrl);
@@ -96,7 +96,7 @@ app.get("/api/cart-details", async (req, res) => {
       })
       .filter(Boolean);
 
-    return res.json(mergedCart); // ✅ return here
+    return res.json(mergedCart);
   } catch (error) {
     console.error("Aggregation error:", error.message);
     console.error("FULL ERROR:", error.response?.status);

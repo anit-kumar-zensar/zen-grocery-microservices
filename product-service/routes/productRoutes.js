@@ -5,30 +5,53 @@ const router = express.Router();
 
 // GET /api/products
 // Optional Query: ?category=smartphones
+
 router.get("/", async (req, res) => {
   try {
-    const { category } = req.query;
-
+    let { category } = req.query;
     let filter = {};
 
-    if (category) {
-      const allowedCategories = [
-        "home-decoration",
-        "groceries",
-        "skincare",
-        "fragrances",
-        "laptops",
-        "smartphones",
-      ];
+    const allowedCategories = [
+      "home-decoration",
+      "groceries",
+      "skincare",
+      "fragrances",
+      "laptops",
+      "smartphones",
+      "Fruits",
+      "Vegetables",
+      "Dairy",
+      "Snacks",
+    ];
 
-      if (!allowedCategories.includes(category)) {
+    if (category) {
+      // Convert to array (supports comma-separated or repeated query params)
+      let categories = [];
+
+      if (Array.isArray(category)) {
+        categories = category;
+      } else {
+        categories = category.split(",");
+      }
+
+      // Remove duplicates & trim spaces
+      categories = [...new Set(categories.map((c) => c.trim()))];
+
+      // Validate categories
+      const invalidCategories = categories.filter(
+        (c) => !allowedCategories.includes(c),
+      );
+
+      if (invalidCategories.length > 0) {
         return res.status(400).json({
           message: "Invalid category",
+          invalidCategories,
           allowedCategories,
         });
       }
 
-      filter.category = category;
+      // Use $in for multi-category filtering
+      filter.category = { $in: categories };
     }
 
     const products = await Product.find(filter);
