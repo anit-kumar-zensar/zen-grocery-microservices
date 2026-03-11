@@ -4,98 +4,175 @@ const Product = require("../models/Product");
 const MONGO_URI = "mongodb://localhost:27017/microservicesDB";
 
 const baseProducts = [
-  { name: "iPhone 9", price: 549, category: "smartphones" },
-  { name: "iPhone X", price: 899, category: "smartphones" },
-  { name: "Samsung Universe 9", price: 1249, category: "smartphones" },
-  { name: "OPPOF19", price: 280, category: "smartphones" },
-  { name: "Huawei P30", price: 499, category: "smartphones" },
-  { name: "MacBook Pro", price: 1749, category: "laptops" },
-  { name: "Samsung Galaxy Book", price: 1499, category: "laptops" },
-  { name: "Microsoft Surface Laptop 4", price: 1499, category: "laptops" },
-  { name: "Infinix INBOOK", price: 1099, category: "laptops" },
-  { name: "HP Pavilion 15-DK1056WM", price: 1099, category: "laptops" },
-  { name: "Perfume Oil", price: 13, category: "fragrances" },
-  { name: "Brown Perfume", price: 40, category: "fragrances" },
-  { name: "Hyaluronic Acid Serum", price: 19, category: "skincare" },
-  { name: "Oil Free Moisturizer 100ml", price: 40, category: "skincare" },
-  { name: "Daal Masoor 500 grams", price: 20, category: "groceries" },
-  { name: "Elbow Macaroni - 400 gm", price: 14, category: "groceries" },
-  { name: "Plant Hanger For Home", price: 41, category: "home-decoration" },
-  { name: "3D Embellishment Art Lamp", price: 20, category: "home-decoration" },
-  // --- New Smartphones ---
-  { name: "Google Pixel 7", price: 699, category: "smartphones" },
-  { name: "OnePlus 11", price: 729, category: "smartphones" },
-  { name: "Xiaomi Mi 12", price: 649, category: "smartphones" },
-  { name: "Realme GT Neo 3", price: 599, category: "smartphones" },
-
-  // --- New Laptops ---
-  { name: "Dell XPS 13", price: 1399, category: "laptops" },
-  { name: "Lenovo ThinkPad X1 Carbon", price: 1699, category: "laptops" },
-  { name: "Asus ROG Zephyrus G14", price: 1599, category: "laptops" },
-  { name: "Acer Aspire 5", price: 899, category: "laptops" },
-  // --- New Skincare ---
-  { name: "Vitamin C Brightening Serum", price: 29, category: "skincare" },
-  { name: "Aloe Vera Soothing Gel", price: 15, category: "skincare" },
-  { name: "SPF 50 Sunscreen Lotion", price: 22, category: "skincare" },
-
-  // --- New Groceries ---
-  { name: "Organic Basmati Rice 1kg", price: 18, category: "groceries" },
-  { name: "Olive Oil Extra Virgin 500ml", price: 25, category: "groceries" },
-  { name: "Peanut Butter 340g", price: 12, category: "groceries" },
-  { name: "Green Tea 100 Bags", price: 10, category: "groceries" },
-
-  // --- New Home Decoration ---
-  { name: "Modern Wall Clock", price: 55, category: "home-decoration" },
-  { name: "Decorative Throw Pillow", price: 30, category: "home-decoration" },
-  { name: "Indoor LED String Lights", price: 18, category: "home-decoration" },
-  { name: "Wooden Floating Shelves", price: 65, category: "home-decoration" },
-  // --- Fruits ---
-  { name: "Fresh Red Apples 1kg", price: 4, category: "Fruits" },
-  { name: "Bananas 1 Dozen", price: 3, category: "Fruits" },
-  { name: "Mangoes 1kg", price: 6, category: "Fruits" },
-  { name: "Strawberries 500g", price: 5, category: "Fruits" },
-  { name: "Watermelon Whole", price: 7, category: "Fruits" },
-
-  // --- Vegetables ---
-  { name: "Tomatoes 1kg", price: 3, category: "Vegetables" },
-  { name: "Potatoes 2kg", price: 5, category: "Vegetables" },
-  { name: "Onions 1kg", price: 2, category: "Vegetables" },
-  { name: "Carrots 1kg", price: 3, category: "Vegetables" },
-  { name: "Spinach Bundle", price: 2, category: "Vegetables" },
-  // --- Dairy ---
-  { name: "Fresh Milk 1L", price: 2, category: "Dairy" },
-  { name: "Cheddar Cheese 200g", price: 4, category: "Dairy" },
-  { name: "Plain Yogurt 500g", price: 3, category: "Dairy" },
-  { name: "Butter 250g", price: 5, category: "Dairy" },
-  { name: "Eggs Pack of 12", price: 4, category: "Dairy" },
-
-  // --- Snacks ---
-  { name: "Salted Potato Chips 150g", price: 2, category: "Snacks" },
-  { name: "Chocolate Cookies 200g", price: 3, category: "Snacks" },
-  { name: "Mixed Nuts 250g", price: 6, category: "Snacks" },
-  { name: "Popcorn 100g", price: 2, category: "Snacks" },
-  { name: "Energy Bar Pack", price: 5, category: "Snacks" },
+  {
+    name: "Apple",
+    price: 220,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/apple.jpg",
+    ratingCount: 210,
+    stock: 85,
+  },
+  {
+    name: "Banana",
+    price: 60,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/banana.jpg",
+    ratingCount: 185,
+    stock: 120,
+  },
+  {
+    name: "Lemon",
+    price: 50,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/lemon.jpg",
+    ratingCount: 95,
+    stock: 60,
+  },
+  {
+    name: "Pear",
+    price: 130,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/pears.jpg",
+    ratingCount: 110,
+    stock: 70,
+  },
+  {
+    name: "Pomegranate",
+    price: 210,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/Pomegranate.jpg",
+    ratingCount: 160,
+    stock: 75,
+  },
+  {
+    name: "Almonds",
+    price: 450,
+    category: "snacks",
+    imageUrl: "http://localhost:5001/assets/almonds.jpg",
+    ratingCount: 130,
+    stock: 50,
+  },
+  {
+    name: "Walnuts",
+    price: 500,
+    category: "snacks",
+    imageUrl: "http://localhost:5001/assets/walnuts.jpg",
+    ratingCount: 125,
+    stock: 45,
+  },
+  {
+    name: "Cashews",
+    price: 550,
+    category: "snacks",
+    imageUrl: "http://localhost:5001/assets/cashew.jpg",
+    ratingCount: 140,
+    stock: 55,
+  },
+  {
+    name: "Honey",
+    price: 320,
+    category: "essentials",
+    imageUrl: "http://localhost:5001/assets/honey.jpg",
+    ratingCount: 180,
+    stock: 65,
+  },
+  {
+    name: "Tea Leaves",
+    price: 280,
+    category: "beverages",
+    imageUrl: "http://localhost:5001/assets/tea_leave.jpg",
+    ratingCount: 155,
+    stock: 80,
+  },
+  {
+    name: "Coffee Beans",
+    price: 350,
+    category: "beverages",
+    imageUrl: "http://localhost:5001/assets/coffee_beans.jpg",
+    ratingCount: 170,
+    stock: 70,
+  },
+  {
+    name: "Coconut",
+    price: 80,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/coconut.jpg",
+    ratingCount: 115,
+    stock: 90,
+  },
+  {
+    name: "Avocado",
+    price: 250,
+    category: "fruits",
+    imageUrl: "http://localhost:5001/assets/avocado.jpg",
+    ratingCount: 135,
+    stock: 55,
+  },
+  {
+    name: "Ginger",
+    price: 70,
+    category: "essentials",
+    imageUrl: "http://localhost:5001/assets/ginger.jpg",
+    ratingCount: 145,
+    stock: 100,
+  },
+  {
+    name: "Garlic",
+    price: 60,
+    category: "essentials",
+    imageUrl: "http://localhost:5001/assets/garlic.jpg",
+    ratingCount: 150,
+    stock: 110,
+  },
+  {
+    name: "Lettuce",
+    price: 90,
+    category: "vegetables",
+    imageUrl: "http://localhost:5001/assets/lettuce.jpg",
+    ratingCount: 100,
+    stock: 75,
+  },
+  {
+    name: "Cucumber",
+    price: 70,
+    category: "vegetables",
+    imageUrl: "http://localhost:5001/assets/cucumber.jpg",
+    ratingCount: 105,
+    stock: 80,
+  },
+  {
+    name: "Zucchini",
+    price: 95,
+    category: "vegetables",
+    imageUrl: "http://localhost:5001/assets/zucchini.jpg",
+    ratingCount: 85,
+    stock: 60,
+  },
+  {
+    name: "Avocado Oil",
+    price: 450,
+    category: "essentials",
+    imageUrl: "http://localhost:5001/assets/avocado_oil.jpg",
+    ratingCount: 120,
+    stock: 50,
+  },
+  {
+    name: "Maple Syrup",
+    price: 380,
+    category: "essentials",
+    imageUrl: "http://localhost:5001/assets/maple_syrup.jpg",
+    ratingCount: 110,
+    stock: 45,
+  },
+  {
+    name: "Pasta",
+    price: 140,
+    category: "grains",
+    imageUrl: "http://localhost:5001/assets/pasta.jpg",
+    ratingCount: 190,
+    stock: 95,
+  },
 ];
-
-const categoryColors = {
-  smartphones: "1E90FF",
-  laptops: "6A5ACD",
-  fragrances: "FF69B4",
-  skincare: "20B2AA",
-  groceries: "32CD32",
-  "home-decoration": "FF8C00",
-  Fruits: "FF3B30",
-  Vegetables: "228B22",
-  Dairy: "8B5CF6",
-  Snacks: "FFD700",
-};
-
-const products = baseProducts.map((p) => ({
-  ...p,
-  imageUrl: `https://dummyimage.com/400x400/${
-    categoryColors[p.category]
-  }/ffffff&text=${encodeURIComponent(p.name)}`,
-}));
 
 const seedProducts = async () => {
   try {
@@ -105,7 +182,7 @@ const seedProducts = async () => {
     await Product.deleteMany();
     console.log("Existing products removed");
 
-    await Product.insertMany(products);
+    await Product.insertMany(baseProducts);
     console.log("Products seeded successfully");
 
     process.exit();

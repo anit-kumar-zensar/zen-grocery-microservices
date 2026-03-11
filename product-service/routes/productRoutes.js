@@ -12,16 +12,14 @@ router.get("/", async (req, res) => {
     let filter = {};
 
     const allowedCategories = [
-      "home-decoration",
+      "grains",
       "groceries",
-      "skincare",
-      "fragrances",
-      "laptops",
-      "smartphones",
-      "Fruits",
-      "Vegetables",
-      "Dairy",
-      "Snacks",
+      "beverages",
+      "essentials",
+      "fruits",
+      "vegetables",
+      "dairy",
+      "snacks",
     ];
 
     if (category) {
